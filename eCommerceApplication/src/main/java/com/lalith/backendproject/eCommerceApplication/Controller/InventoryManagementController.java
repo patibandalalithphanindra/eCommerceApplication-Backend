@@ -24,10 +24,10 @@ public class InventoryManagementController {
     }
 
     // 2) Add a product to Inventory
-    @PostMapping("/add")
-    public List<String> addInventory(@RequestBody List<Inventory> inventory){
-        return inventoryManagementService.addProduct(inventory);
-    }
+//    @PostMapping("/add")
+//    public List<String> addInventory(@RequestBody List<Inventory> inventory){
+//        return inventoryManagementService.addProduct(inventory);
+//    }
 
     // 3) Delete a product in inventory
     @DeleteMapping("/{productId}")
@@ -36,7 +36,7 @@ public class InventoryManagementController {
     }
 
     // 4) Update the inventory
-    @PutMapping("/{productId}")
+    @PatchMapping("/{productId}")
     public String updateInventory(@PathVariable("productId") String productId, @RequestBody Inventory inventory){
         return inventoryManagementService.updateProduct(productId,inventory);
     }

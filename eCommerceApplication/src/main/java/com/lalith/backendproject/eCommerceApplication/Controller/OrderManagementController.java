@@ -28,6 +28,7 @@ public class OrderManagementController {
     // 3) Add an Order
     @PostMapping("/addOrder")
     public List<String> addOrder(@RequestBody List<Order> orderList){
+        System.out.println(orderList);
      return orderManagementService.addOrder(orderList);
     }
 }

@@ -1,6 +1,8 @@
 package com.lalith.backendproject.eCommerceApplication.Service;
 
 import com.lalith.backendproject.eCommerceApplication.Model.Inventory;
+import com.lalith.backendproject.eCommerceApplication.Model.Order;
+import com.lalith.backendproject.eCommerceApplication.Model.Product;
 import com.lalith.backendproject.eCommerceApplication.Repository.InventoryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -27,19 +29,19 @@ public class InventoryManagementService {
     }
 
     // 2) Adding a new product to inventory
-    public List<String> addProduct(List<Inventory> inventoryList){
-        List<String> updatedProductList = new ArrayList<>();
-
-        for(Inventory product : inventoryList){
-            if(inventoryRepository.existsById(product.getProductId())){
-                updatedProductList.add("Product already exists, Product Id : " + product.getProductId());
-            } else{
-                Inventory updatedProductInfo = inventoryRepository.save(product);
-                updatedProductList.add("Product has been saved successfully!, Product Id : " + updatedProductInfo.getProductId());
-            }
-        }
-        return updatedProductList;
-    }
+//    public List<String> addProduct(List<Order> inventoryList){
+//        List<String> updatedProductList = new ArrayList<>();
+//
+//        for(Order product : inventoryList){
+//            if(inventoryRepository.existsById(product.getProductId())){
+//                updatedProductList.add("Product already exists, Product Id : " + product.getProductId());
+//            } else{
+//                Inventory updatedProductInfo = inventoryRepository.save(product);
+//                updatedProductList.add("Product has been saved successfully!, Product Id : " + updatedProductInfo.getProductId());
+//            }
+//        }
+//        return updatedProductList;
+//    }
 
     // 3) Deleting a product in the inventory
     public String deleteProduct(String productId){
@@ -55,17 +57,19 @@ public class InventoryManagementService {
     //4) Updating the product in the inventory
     public String updateProduct(String productId, Inventory inventory){
         Optional<Inventory> existingProduct = inventoryRepository.findById(productId);
+        System.out.println(existingProduct);
+        List<Product> listOfProd =existingProduct.get().getProd();
         if(existingProduct.isEmpty()){
             throw new RuntimeException("Product does not exist");
         }
-        else{
-            existingProduct.get().setProductName(inventory.getProductName());
-            existingProduct.get().setCategory(inventory.getCategory());
-            existingProduct.get().setPrice(inventory.getPrice());
-            existingProduct.get().setQuantity(inventory.getQuantity());
-            //saving the updated product in the inventory repository
-            inventoryRepository.save(existingProduct.get());
-        }
+//        else{
+//            existingProduct.get().getProd().setProductName(inventory.getProductName());
+//            existingProduct.get().setCategory(inventory.getCategory());
+//            existingProduct.get().setPrice(inventory.getPrice());
+//            existingProduct.get().setQuantity(inventory.getQuantity());
+//            //saving the updated product in the inventory repository
+//            inventoryRepository.save(existingProduct.get());
+//        }
         return productId + " has been updated successfully!";
     }
 
