@@ -40,57 +40,58 @@ public class OrderManagementService {
 
         for (Product product : order.getInventoryList()) {
 
-            Optional<Inventory> optionalInventory = inventoryRepository.findById(product.getProductId());
-            System.out.println("orders"+optionalInventory);
+            System.out.println(product + "inven");
+            List<Product> addItemtiInventory = new ArrayList<>();
+            if (order.getOrderType() == OrderType.purchase) {
+                Optional<Inventory> optionalInventory = inventoryRepository.findById(product.getProductId());
 
-                List<Product> inventory = optionalInventory.get().getProd();
-                for (Product prod : inventory) {
-                    if (order.getOrderType() == OrderType.purchase) {
-                        if (optionalInventory.isPresent()) {
-
-                            System.out.println("Order Type Purchase");
-                        int newQuantity = prod.getQuantity() + product.getQuantity();
-                        prod.setQuantity(newQuantity);
-                        optionalInventory.get().getProd().add(product);
+                if (optionalInventory.isPresent()) {
+                    List<Product> inventory = optionalInventory.get().getProd();
+                    for (Product inven : inventory) {
+                        int newQuantity = product.getQuantity() + inven.getQuantity();
+                        inven.setQuantity(newQuantity);
                         order.setCurrentDateTimeInfo(LocalDateTime.now());
                         orderRepository.save(order);
                         inventoryRepository.save(optionalInventory.get());
                         orders.add(product.getProductId() + " has been purchased and added to the inventory successfully!");
-
-                    }} else {
-                        if (product.getQuantity() <= prod.getQuantity()) {
-                            int newQuantity = prod.getQuantity() - product.getQuantity();
-                            prod.setQuantity(newQuantity);
-                            inventoryRepository.save(optionalInventory.get());
-                            orders.add(product.getProductId() + " Product has been sold successfully!");
-                            orderRepository.save(order);
-
-                        } else {
-                            orders.add(product.getProductId() + " has not been sold because of unavailability");
-                        }
                     }
+                } else {
+                    addItemtiInventory.add(product);
+                    Inventory addProdtoDB = new Inventory(addItemtiInventory);
+                    addProdtoDB.setProductId(product.getProductId());
+                    orders.add(product.getProductId() + " Product has been sold successfully!");
+                    inventoryRepository.save(addProdtoDB);
 
-
-                    order.setCurrentDateTimeInfo(LocalDateTime.now());
                     orderRepository.save(order);
-                    if (order.getOrderType() == OrderType.sale) {
-                        // If it is sale (sold to customer)
-                        if (inventoryRepository.existsById(prod.getProductId())) {
-                            Optional<Inventory> saleInventory = inventoryRepository.findById(prod.getProductId());
-                            if (prod.getQuantity() <= product.getQuantity()) {
-                                product.setQuantity(product.getQuantity() - prod.getQuantity());
-                                inventoryRepository.save(saleInventory.get());
-//                      order.setCurrentDateTimeInfo(LocalDateTime.now());
-                                orderRepository.save(order);
-                                orders.add(prod.getProductId() + " Product has been sold successfully!");
-                            } else {
-                                orders.add(prod.getProductId() + " has not been sold because of unavailability");
-                            }
+
+
+                }
+
+            }
+
+            order.setCurrentDateTimeInfo(LocalDateTime.now());
+            orderRepository.save(order);
+            if (order.getOrderType() == OrderType.sale) {
+                // If it is sale (sold to customer)
+                if (inventoryRepository.existsById(product.getProductId())) {
+                    Optional<Inventory> saleInventory = inventoryRepository.findById(product.getProductId());
+                    for (Product prod : saleInventory.get().prod) {
+                        
+                        if (prod.getQuantity() >= product.getQuantity()) {
+                            prod.setQuantity(prod.getQuantity() - product.getQuantity());
+                            inventoryRepository.save(saleInventory.get());
+                            order.setCurrentDateTimeInfo(LocalDateTime.now());
+                            orderRepository.save(order);
+                            orders.add(prod.getProductId() + " Product has been sold successfully!");
                         } else {
-                            orders.add(prod.getProductId() + " Product is not in inventory");
+                            orders.add(prod.getProductId() + " has not been sold because of unavailability");
                         }
                     }
+                } else {
+                    orders.add(product.getProductId() + " Product is not in inventory");
+
                 }
+            }
 
         }
 //        }}

@@ -12,13 +12,17 @@ import java.util.List;
 @NoArgsConstructor
 @Document(collection = "inventory")
 public class Inventory {
+
     @Id
-    private String inventoryId;
+    private String productId;
+    public Inventory(List<Product> prod) {
+        this.prod = prod;
+    }
 
-
-
-//    public Inventory(int quantity) {
+    //    public Inventory(int quantity) {
 //        this.quantity = quantity;
 //    }
     public List<Product> prod;
+
+
 }
