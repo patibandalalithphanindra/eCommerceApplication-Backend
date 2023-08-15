@@ -15,14 +15,9 @@ public class Inventory {
 
     @Id
     private String productId;
+    public List<Product> prod;
+
     public Inventory(List<Product> prod) {
         this.prod = prod;
     }
-
-    //    public Inventory(int quantity) {
-//        this.quantity = quantity;
-//    }
-    public List<Product> prod;
-
-
 }

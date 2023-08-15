@@ -15,11 +15,9 @@ import java.util.List;
 public class Order {
     @Id
     private String orderId;
-    //    private String productId;
     private List<Product> inventoryList;
     private OrderType orderType;
     private LocalDateTime currentDateTimeInfo;
-
 
     public Order(List<Product> inventoryList, OrderType orderType) {
         this.inventoryList = inventoryList;

@@ -1,6 +1,7 @@
 package com.lalith.backendproject.eCommerceApplication.Controller;
 
 import com.lalith.backendproject.eCommerceApplication.Model.Inventory;
+import com.lalith.backendproject.eCommerceApplication.Model.Product;
 import com.lalith.backendproject.eCommerceApplication.Service.InventoryManagementService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -23,12 +24,6 @@ public class InventoryManagementController {
         return inventoryManagementService.getAllProducts();
     }
 
-    // 2) Add a product to Inventory
-//    @PostMapping("/add")
-//    public List<String> addInventory(@RequestBody List<Inventory> inventory){
-//        return inventoryManagementService.addProduct(inventory);
-//    }
-
     // 3) Delete a product in inventory
     @DeleteMapping("/{productId}")
     public String deleteInventory(@PathVariable("productId") String productId){
@@ -37,8 +32,9 @@ public class InventoryManagementController {
 
     // 4) Update the inventory
     @PatchMapping("/{productId}")
-    public String updateInventory(@PathVariable("productId") String productId, @RequestBody Inventory inventory){
+    public String updateInventory(@PathVariable("productId") String productId, @RequestBody Product inventory){
         return inventoryManagementService.updateProduct(productId,inventory);
     }
 
 }
+
