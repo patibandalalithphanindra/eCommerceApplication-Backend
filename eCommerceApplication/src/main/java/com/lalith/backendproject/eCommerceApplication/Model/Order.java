@@ -18,7 +18,7 @@ public class Order {
     //    private String productId;
     private List<Product> inventoryList;
     private OrderType orderType;
-//    private LocalDateTime currentDateTimeInfo;
+    private LocalDateTime currentDateTimeInfo;
 
 
     public Order(List<Product> inventoryList, OrderType orderType) {
