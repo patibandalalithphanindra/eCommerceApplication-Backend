@@ -11,16 +11,16 @@ import java.util.List;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Getter
-@Setter
 @Document(collection = "order")
 public class Order {
     @Id
     private String orderId;
-    private String productId;
-    private String productName;
-    private int quantity;
-    private List<Inventory> inventoryList;
+    private List<Product> inventoryList;
     private OrderType orderType;
     private LocalDateTime currentDateTimeInfo;
+
+    public Order(List<Product> inventoryList, OrderType orderType) {
+        this.inventoryList = inventoryList;
+        this.orderType = orderType;
+    }
 }
