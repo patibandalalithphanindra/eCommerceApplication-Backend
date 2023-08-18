@@ -1,12 +1,12 @@
 package com.lalith.backendproject.eCommerceApplication;
 
-import com.lalith.backendproject.eCommerceApplication.Model.Inventory;
-import com.lalith.backendproject.eCommerceApplication.Model.Order;
-import com.lalith.backendproject.eCommerceApplication.Model.Product;
-import com.lalith.backendproject.eCommerceApplication.Repository.InventoryRepository;
-import com.lalith.backendproject.eCommerceApplication.Repository.OrderRepository;
-import com.lalith.backendproject.eCommerceApplication.Service.InventoryManagementService;
-import com.lalith.backendproject.eCommerceApplication.Service.OrderManagementService;
+import com.lalith.backendproject.eCommerceApplication.model.Inventory;
+import com.lalith.backendproject.eCommerceApplication.model.Order;
+import com.lalith.backendproject.eCommerceApplication.model.Product;
+import com.lalith.backendproject.eCommerceApplication.repository.InventoryRepository;
+import com.lalith.backendproject.eCommerceApplication.repository.OrderRepository;
+import com.lalith.backendproject.eCommerceApplication.service.InventoryManagementService;
+import com.lalith.backendproject.eCommerceApplication.service.OrderManagementService;
 import com.lalith.backendproject.eCommerceApplication.type.OrderType;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -151,7 +151,6 @@ public class ServiceTest {
         when(inventoryRepository.findById(any())).thenReturn(Optional.of(inventory));
 
         List<String> result = orderManagementService.addOrder(order);
-        System.out.println(result);
 
         assertNotNull(result);
         assertEquals(2, result.size());
