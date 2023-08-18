@@ -151,7 +151,6 @@ public class ServiceTest {
         when(inventoryRepository.findById(any())).thenReturn(Optional.of(inventory));
 
         List<String> result = orderManagementService.addOrder(order);
-        System.out.println(result);
 
         assertNotNull(result);
         assertEquals(2, result.size());

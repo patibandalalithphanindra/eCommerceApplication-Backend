@@ -36,6 +36,27 @@ public class OrderManagementService {
     public List<String> addOrder(Order order) {
         List<String> orders = new ArrayList<>();
         for (Product product : order.getInventoryList()) {
+            if (product.getProductId() != null) {
+                Optional<Inventory> inventoryOptional = inventoryRepository.findById(product.getProductId());
+                if (inventoryOptional.isPresent()) {
+                    Inventory inventory = inventoryOptional.get();
+                    Optional<Product> matchingProductOptional = inventory.getProd().stream()
+                            .filter(p -> p.getProductId().equals(product.getProductId()))
+                            .findFirst();
+                    if (matchingProductOptional.isPresent()) {
+                        Product matchingProduct = matchingProductOptional.get();
+                        Product updatedProduct = new Product(
+                                product.getProductId(),
+                                matchingProduct.getProductName(),
+                                matchingProduct.getPrice(),
+                                matchingProduct.getCategory(),
+                                product.getQuantity()
+                        );
+                        int index = order.getInventoryList().indexOf(product);
+                        order.getInventoryList().set(index, updatedProduct);
+                    }
+                }
+            }
             List<Product> addItemtoInventory = new ArrayList<>();
             if (order.getOrderType() == OrderType.purchase) {
                 Optional<Inventory> optionalInventory = inventoryRepository.findById(product.getProductId());
@@ -69,10 +90,12 @@ public class OrderManagementService {
                             prod.setQuantity(prod.getQuantity() - product.getQuantity());
                             inventoryRepository.save(saleInventory.get());
                             order.setCurrentDateTimeInfo(LocalDateTime.now());
-                            orderRepository.save(order);
-                            orders.add(prod.getProductId() + " Product has been sold successfully!");
+                             orderRepository.save(order);
+                            orders.add(prod.getProductId() + " Product has been sold successfully - Quantity : " + product.getQuantity()  );
                         } else {
-                            orders.add(prod.getProductId() + " has not been sold because of unavailability");
+                            orders.add(prod.getProductId() + " cannot be sold because of insufficient quantity, as you are placing order for a quantity of "+
+                                    product.getQuantity() +
+                               ". " + "But, we only have a quantity of " + prod.getQuantity() + ".");
                         }
                     }
                 } else {
