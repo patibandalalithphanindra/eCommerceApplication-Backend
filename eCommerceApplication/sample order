@@ -1,0 +1,22 @@
+[{
+    "inventoryList":[
+    {
+        "productId": "A1",
+         "productName":"Milk",
+        "price":29.9,
+        "category":"Dairy",
+        "quantity":10
+    },
+
+    {
+        "productId": "A2",
+          "productName":"Salt",
+        "price":139.9,
+
+        "category":"Dairy",
+        "quantity":12
+     }
+    
+],
+ "orderType":"purchase"
+}]
