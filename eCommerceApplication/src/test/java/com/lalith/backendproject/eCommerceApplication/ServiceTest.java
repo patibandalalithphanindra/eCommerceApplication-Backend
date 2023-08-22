@@ -5,8 +5,10 @@ import com.lalith.backendproject.eCommerceApplication.model.Order;
 import com.lalith.backendproject.eCommerceApplication.model.Product;
 import com.lalith.backendproject.eCommerceApplication.repository.InventoryRepository;
 import com.lalith.backendproject.eCommerceApplication.repository.OrderRepository;
+import com.lalith.backendproject.eCommerceApplication.repository.ProductRepository;
 import com.lalith.backendproject.eCommerceApplication.service.InventoryManagementService;
 import com.lalith.backendproject.eCommerceApplication.service.OrderManagementService;
+import com.lalith.backendproject.eCommerceApplication.service.ProductManagementService;
 import com.lalith.backendproject.eCommerceApplication.type.OrderType;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -28,10 +30,16 @@ public class ServiceTest {
     InventoryRepository inventoryRepository;
     @Mock
     OrderRepository orderRepository;
+
+    @Mock
+    ProductRepository productRepository;
     @InjectMocks
     InventoryManagementService inventoryManagementService;
     @InjectMocks
     OrderManagementService orderManagementService;
+
+    @InjectMocks
+    ProductManagementService productManagementService;
 
     @Test
     public void test_getAllProducts() {

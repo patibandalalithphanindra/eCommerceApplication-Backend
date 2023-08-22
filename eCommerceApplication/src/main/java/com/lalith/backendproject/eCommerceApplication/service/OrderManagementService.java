@@ -5,6 +5,7 @@ import com.lalith.backendproject.eCommerceApplication.model.Order;
 import com.lalith.backendproject.eCommerceApplication.model.Product;
 import com.lalith.backendproject.eCommerceApplication.repository.InventoryRepository;
 import com.lalith.backendproject.eCommerceApplication.repository.OrderRepository;
+import com.lalith.backendproject.eCommerceApplication.repository.ProductRepository;
 import com.lalith.backendproject.eCommerceApplication.type.OrderType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -21,6 +22,9 @@ public class OrderManagementService {
     public OrderRepository orderRepository;
     @Autowired
     public InventoryRepository inventoryRepository;
+
+    @Autowired
+    public ProductRepository productRepository;
 
     // 1) Finding All Orders
     public List<Order> findAllOrders() {
@@ -76,6 +80,7 @@ public class OrderManagementService {
                     addProdtoDB.setProductId(product.getProductId());
                     orders.add(product.getProductId() + " Product has been purchased and added to inventory successfully!");
                     inventoryRepository.save(addProdtoDB);
+                    productRepository.save(product);
                     orderRepository.save(order);
                 }
             }

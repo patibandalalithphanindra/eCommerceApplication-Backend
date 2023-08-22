@@ -14,7 +14,7 @@
 	<name>management</name>
 	<description>eCommerce Backend Project Using Spring Boot</description>
 	<properties>
-		<java.version>18</java.version>
+		<java.version>20</java.version>
 	</properties>
 	<dependencies>
 
