@@ -1,0 +1,13 @@
+ {
+        "inventoryList": [
+            {
+                "productId": "P5",
+                "productName": "Biscuits",
+                "price": 15.0,
+                "category": "Grocery",
+                "quantity": 500
+            }
+        ],
+        "orderType" : "purchase"
+    }
+
